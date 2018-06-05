@@ -9,6 +9,5 @@ function [ temp ] = rozszezanie( obraz_we )
     temp(:,1)=temp(:,2);            %powielenie pierwszej kolumny
     temp(:,LK+2)=temp(:,LK+1);      %powielenie ostatniej kolumny
 
-
 end
 
