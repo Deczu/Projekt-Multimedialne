@@ -1,33 +1,33 @@
 close all;
 clear all;
 clc;
-obraz_we=imread('lena.png'); % Wczytanie obrazu
+%{
+Program zrealizowany w ramach projektu uczelnianego z przedmiotu Systemy
+Multimedialne.
+Wykonano na PWSZ TARNÓW
+Do w pe³ni poprawnego dzia³ania zaleca siê u¿ycie matlaba 2017a
+Na wersji 2010b obraz z funkcji konwolucja nie rysuje siê dynamicznie
+%}
+[obraz_we,flaga]=wyborObrazu();%wczytanie obrazu
 temp=rozszezanie(obraz_we);  %rozszezenie obrazu w celu filtracji maska 3x3
-while(1) %wybor  maski (Laplasjanu)
-    clc;
-    chr = '1 [0 -1 0; -1 4 -1;0 -1 0]';
-    chr = [chr newline '2 [1 -2 1; -2 4 -2;1 -2 1]'];
-    chr = [chr newline '3 [-1 -1 -1; -1 8 -1;-1 -1 -1]'];
-    chr = [chr newline '4 [-1 0 -1;0 4 0;-1 0 -1]']
-    lap = input(' Wybierz jedn¹ z masek: ');
-    if(lap==1)
-        maska9=[0 -1 0; -1 4 -1;0 -1 0];
-        break;
-    elseif lap==2
-             maska9=[1 -2 1; -2 4 -2;1 -2 1];
-             break;
-    elseif lap==3
-             maska9=[-1 -1 -1; -1 8 -1;-1 -1 -1];
-             break;
-    elseif lap==4
-                maska9=[-1 0 -1;0 4 0;-1 0 -1];
-                break;
-    else        
-         fprintf('Zly klawisz');
-    end
-end
-obraz_wy=edycja_obrazu(maska9,temp);%przeliczanie nowych elementów obrazu
+obraz=uint8(obraz_we(:,:,1)); %potrzebne w ostatnim wykresie jest to wczytany obraz
+maska9=wybMaski(); %wybranie maski 
+obraz_wy=konwolucja(maska9,temp,flaga);%przeliczanie nowych elementów obrazu   ZMIENIC NAZWE NA KONWOLICJA
+obraz2=obraz_wy;
+lap2=wybNormal(); %wybieranie normalizacji
+obraz3=normalizacja(obraz_wy,maska9,lap2); %normalizacja obrazu
+fprintf('Enter aby kontynuowaæ');
+disp(' ');
 pause;
-[obraz_wy,animacja]=normalizacja(obraz_wy,maska9); %normalizacja obrazu
+figure
+subplot(3,1,1)%sumaryczny wykres Obraz wczytany po konw + konw i norm
+imshow(obraz)
+title('Obraz Oryginalny');
+subplot(3,1,2)
+imshow(obraz2)
+title('Obraz po konwolucji');
+subplot(3,1,3)
+imshow(obraz3)
+title('Obraz po konwolucji i normalizacji');
 
 

@@ -5,7 +5,12 @@ for i=1:256
     for j=1:128
         obraz(i,j)=255;
     end
-end       
+end
+for i=1:256
+    for j=128:256
+        obraz(i,j)=0;
+    end
+end   
 imwrite(obraz,'pol_na_pol.bmp');
 
 obraz=ones(256,256);
